@@ -45,9 +45,16 @@ a:focus {
 .theme-4 a { color: #6EAE8C; }
 .theme-4 a:hover, .theme-4 a:focus { color: #74777b; }
 
-.theme-5 { background: #e4eaea; color: #74777b;}
-.theme-5 a { color: #EA8686; }
+.theme-5 { background: #fff; color: #008000;}
+.theme-5 a { color: #FFD700; }
 .theme-5 a:hover, .theme-5 a:focus { color: #74777b; }
+.theme-5 .button--fill .morph-shape svg {
+	fill: #008000;
+}
+.theme-5 .button--fill:nth-child(4) .morph-shape svg {
+	fill: #008000;
+}
+.theme-5 .button__text2 { color: #FFD700;}
 
 .theme-6 a { color: #CFB75C; }
 .theme-6 a:hover, .theme-6 a:focus { color: #74777b; }
