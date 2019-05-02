@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Floyd Central | Soccer</title>
+		<meta name="description" content="Adding elasticity with SVG shape animations" />
+		<meta name="keywords" content="svg, morph, snap.svg, effect, animation, css, shape" />
+		<meta name="author" content="Codrops" />
+		<link rel="shortcut icon" href="./favicon.ico">
+		<link rel="stylesheet" type="text/css" href="css/normalize.css" />
+		<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.2.0/css/font-awesome.min.css" />
+		<link rel="stylesheet" type="text/css" href="css/demo.css" />
+		<link rel="stylesheet" type="text/css" href="css/button.css" />
+		<script src="js/snap.svg-min.js"></script>
+		<!--[if IE]>
+  		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+	</head>
+	<body class="theme-8">
+		<div class="container">
+			<div class="main">
+				<header class="codrops-header">
+					<h1>Floyd Central Soccer</span></h1>
+				</header>
+				<div class="content">
+					<div class="button-wrap">
+						<a href="FCCamp2018.pdf" download="">
+						<button class="button button--fill button--effect-1 button--anim-1">
+							<span class="morph-shape" data-morph-active="M286,113c0,0-68.8-6-136-6c-78.2,0-137,6-137,6s2-15.802,2-50.5C15,33.999,13,12,13,12s59-6,137-6c85,0,136,6,136,6s-3,17.598-3,52C283,96.398,286,113,286,113z">
+								<svg width="100%" height="100%" viewBox="0 0 300 125" preserveAspectRatio="none">
+									<path d="M286,113c0,0-68.8,0-136,0c-78.2,0-137,0-137,0s0-15.802,0-50.5C13,33.999,13,12,13,12s59,0,137,0c85,0,136,0,136,0s0,17.598,0,52C286,96.398,286,113,286,113z"/>
+								</svg>
+							</span>
+							<span class="button__text">FC Soccer Camp</span>
+							<span class="button__text2">Click to Download Registration</span>
+						</button>
+						</a>
+
+						<img src="./img/football-soccer-ball-152.png"></img>
+
+					</div>
+				</div>
+			</div><!-- /main -->
+		</div><!-- /container -->
+		<script src="js/classie.js"></script>
+		<script>
+			(function() {
+
+				function extend( a, b ) {
+					for( var key in b ) { 
+						if( b.hasOwnProperty( key ) ) {
+							a[key] = b[key];
+						}
+					}
+					return a;
+				}
+				
+				function SVGButton( el, options ) {
+					this.el = el;
+					this.options = extend( {}, this.options );
+					extend( this.options, options );
+					this.init();
+				}
+
+				SVGButton.prototype.options = {
+					speed : { reset : 800, active : 150 },
+					easing : { reset : mina.elastic, active : mina.easein }
+				};
+
+				SVGButton.prototype.init = function() {
+					this.shapeEl = this.el.querySelector( 'span.morph-shape' );
+
+					var s = Snap( this.shapeEl.querySelector( 'svg' ) );
+					this.pathEl = s.select( 'path' );
+					this.paths = {
+						reset : this.pathEl.attr( 'd' ),
+						active : this.shapeEl.getAttribute( 'data-morph-active' )
+					};
+
+					this.initEvents();
+				};
+
+				SVGButton.prototype.initEvents = function() {
+					this.el.addEventListener( 'mousedown', this.down.bind(this) );
+					this.el.addEventListener( 'touchstart', this.down.bind(this) );
+
+					this.el.addEventListener( 'mouseup', this.up.bind(this) );
+					this.el.addEventListener( 'touchend', this.up.bind(this) );
+
+					this.el.addEventListener( 'mouseout', this.up.bind(this) );
+				};
+
+				SVGButton.prototype.down = function() {
+					this.pathEl.stop().animate( { 'path' : this.paths.active }, this.options.speed.active, this.options.easing.active );
+				};
+
+				SVGButton.prototype.up = function() {
+					this.pathEl.stop().animate( { 'path' : this.paths.reset }, this.options.speed.reset, this.options.easing.reset );
+				};
+
+				[].slice.call( document.querySelectorAll( 'button.button--effect-1' ) ).forEach( function( el ) {
+					new SVGButton( el );
+				} );
+
+				[].slice.call( document.querySelectorAll( 'button.button--effect-2' ) ).forEach( function( el ) {
+					new SVGButton( el, {
+						speed : { reset : 650, active : 650 },
+						easing : { reset : mina.elastic, active : mina.elastic }
+					} );
+				} );
+
+			})();			
+		</script>
+	</body>
+</html>
