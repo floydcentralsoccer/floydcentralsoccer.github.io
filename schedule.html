@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head> 
+  <title></title>
+  <script src="./js/jquery.min.js"></script>
+  <script src="./js/site.js"></script>
+</head>
+<body>
+	<div class="header"></div>
+
+	<div class="container">
+	<h3>
+	<p style="font-size: 18px;">
+	<a class="" href="index.html">Home</a>&nbsp;/&nbsp;<a class="homeref teamname" href="home.html"></a>&nbsp;/&nbsp;<span>Schedule</span>
+	</p>	
+	</h3> 
+	</div>
+  
+  <div class="container">
+    <h2 class="page-header">Schedule</h2> 
+    <div class="schedules"></div>
+	
+<script>
+	//Revealing Module Design Pattern 
+	var page = (function () {
+		var init = function() {
+			var team = {};
+			team["teamid"] = getQueryVariable("teamid");
+			
+			teamnode.fetchInfo().done( function (data) {
+				//console.log("fetchInfo done: " + JSON.stringify(data));
+				
+				document.title = data.sitename;
+				$('.sitename').html(data.sitename);
+				$('.lead').html(data.sitewelcome);	
+				$('.homeref').attr('href','home?teamid='+ team["teamid"]);
+			});			
+		
+			teamnode.fetchTeams(team).done( function (data) {
+				//console.log("fetchTeams done: " + JSON.stringify(data));
+				var html = "";
+				team = data.teams[0];
+				team.teamid = team.id;
+				$('.teamname').html(team.name);	
+				
+				teamnode.fetchSchedule({teamid:team.id}).done( function (data) {
+					//console.log("fetchSchedules done: " + JSON.stringify(data));
+					var html = "";
+					
+					html += '<div class="row alert alert-neutral" role="alert"';
+					html +=' style="background:';
+					html += team.background +';color:';
+					html += team.fontcolor +';">';			
+					html += '	<div class="col-sm-2">';
+					html += '		<b>Date</b>';
+					html += '	</div>';
+					html += '	<div class="col-sm-4">';
+					html += '		<b>Opponent</b>';
+					html += '	</div>';
+					html += '	<div class="col-sm-4">';
+					html += '		<b>Location</b>';
+					html += '	</div>			';
+					html += '	<div class="col-sm-2">';
+					html += '		<b>Result</b>';
+					html += '	</div>        ';
+					html += '</div>			';					
+					
+					$.each(data.results, function (i, value) {
+						//console.log('value: ' + JSON.stringify(value));
+						html += '<div class="row alert alert-neutral" role="alert"';
+						html += ' style="color:black"';
+						html += ';">';	
+						html  +=  
+						'  <div class="col-sm-2">' +
+						'   <span>'; html+=value.date + ' ' + value.time;html+='</span>' +
+						'   </div>' +
+						'  <div class="col-sm-4">' +
+						'      <span>';html+=value.opponent;html+='</span> ' +           
+						'  </div>' +
+						'  <div class="col-sm-4">' +
+						'      <span>';html+=value.location;html+='</span> ' +           
+						'  </div>' +	        
+						'  <div class="col-sm-2">' +
+						'      <span>';html+=value.score + " " + value.result;html+='</span>' +
+						'  </div>    ' +    
+						'</div> ';
+					});
+
+					$('.schedules').html(html);			
+				})				
+			})	
+		}	
+	
+
+		//Public functions add here; Private otherwise
+		return {
+			init: init,
+		}
+
+	})();
+	
+	$(document).ready(function () {
+		page.init();
+
+	});	
+
+</script>	
+     
+
+</body>
+</html>
