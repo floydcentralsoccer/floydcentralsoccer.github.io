@@ -21,10 +21,11 @@
       
       <p> Thanks</p>
       
-      <p>Scott Menne<br>Camp Director</p>
       
-      <p>Malissa Menne<br>Camp Lead</p>    
-    
+      <p><b>Scott Menne</b><br>Camp Director</p>      
+      <p><b>Malissa Menne</b><br>Camp Lead</p>    
+      
+
     </p>		
         <p class="lead" style="padding-left:40px;">
         <a href="RegistrationSoccerCamp.pdf" download>
@@ -72,33 +73,6 @@
       -->
       
       
-      <script>
-          
-        //Revealing Module Design Pattern 
-        var page = (function () {               
-                var init = function() {         
-                        teamnode.fetchInfo().done( function (data) {
-                                //console.log(&quot;fetchInfo done: &quot; + JSON.stringify(data));                               
-                                document.title = data.sitename;
-                                $('.sitename').html(data.sitename);
-                                //$('.lead').html(data.sitewelcome);                              
-                        });
-                        
-                        
-                }; //init
-        
-                //Public functions add here; Private otherwise
-                return {
-                        init: init,
-                };
-
-        })();
-        
-        $(document).ready(function () {
-                page.init();    
-        });     
-
-</script>
       <div class="footer"></div>
     </div>
     <!-- container -->
